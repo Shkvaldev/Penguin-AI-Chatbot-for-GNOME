@@ -90,6 +90,9 @@ class SettingsUI {
         this.defaultGeminiKey = this.schema.get_string(SettingsKeys.GEMINI_API_KEY);
         this.defaultOpenRouterKey = this.schema.get_string(SettingsKeys.OPENROUTER_API_KEY);
 
+        // Endpoint
+        this.defaultOpenAIEndpoint = this.schema.get_string(SettingsKeys.OPENAI_API_ENDPOINT);
+
         // Models
         this.defaultModel = this.schema.get_string(SettingsKeys.ANTHROPIC_MODEL);
         this.defaultOpenAIModel = this.schema.get_string(SettingsKeys.OPENAI_MODEL);
@@ -194,6 +197,19 @@ class SettingsUI {
             uri:   "https://platform.openai.com/api-keys",
         });
 
+        // OpenAI API Endpoint
+        const labelOpenAIEndpoint = new Gtk.Label({
+            label:        _("OpenAI API Endpoint:"),
+            halign:       Gtk.Align.START,
+            tooltip_text: _("Enter your OpenAI Endpoint URL here."),
+        });
+
+        this.openaiApiEndpoint = new Gtk.Entry({
+            buffer:     new Gtk.EntryBuffer()
+        });
+        this.openaiApiKey.set_placeholder_text(_("Paste your OpenAI API endpoint (ignore to use default)"));
+        this.openaiApiKey.set_text(this.defaultOpenAIEndpoint);
+
         // Gemini API Key
         const labelGeminiAPI = new Gtk.Label({
             label:        _("Gemini API Key:"),
@@ -221,8 +237,7 @@ class SettingsUI {
         });
 
         this.openRouterApiKey = new Gtk.Entry({
-            buffer:     new Gtk.EntryBuffer(),
-            visibility: false,
+            buffer:     new Gtk.EntryBuffer()
         });
         this.openRouterApiKey.set_placeholder_text(_("Paste your OpenRouter API key"));
         this.openRouterApiKey.set_text(this.defaultOpenRouterKey);
@@ -248,7 +263,10 @@ class SettingsUI {
         this.main.attach(labelOpenRouterAPI, 0, 4, 1, 1);
         this.main.attach(this.openRouterApiKey, 2, 4, 2, 1);
         this.main.attach(howToOpenRouterAPI, 4, 4, 1, 1);
-    }
+
+        this.main.attach(labelOpenAIEndpoint, 0, 14, 1, 1);
+        this.main.attach(this.openaiApiEndpoint, 0, 14, 2, 1);
+            }
 
     /**
      * Create the model selection section
@@ -539,6 +557,9 @@ class SettingsUI {
         this.schema.set_string(SettingsKeys.OPENAI_API_KEY, this.openaiApiKey.get_buffer().get_text());
         this.schema.set_string(SettingsKeys.GEMINI_API_KEY, this.geminiApiKey.get_buffer().get_text());
         this.schema.set_string(SettingsKeys.OPENROUTER_API_KEY, this.openRouterApiKey.get_buffer().get_text());
+
+        // Save endpoints
+        this.schema.set_string(SettingsKeys.OPENAI_API_ENDPOINT, this.openaiApiEndpoint.get_buffer().get_text());
 
         // Save models
         this.schema.set_string(SettingsKeys.ANTHROPIC_MODEL, this.model.get_buffer().get_text());

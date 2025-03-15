@@ -17,6 +17,11 @@
         <summary>Anthropic API Key</summary>
         <description>Your Anthropic API key. Required to use Anthropic models.</description>
     </key>
+    <key name="openai-api-endpoint" type="s">
+        <default>""</default>
+        <summary>OpenAI API Endpoint</summary>
+        <description>Your OpenAI API endpoint (ignore, if using default API server from OpenAI).</description>
+    </key>
     <key name="openai-api-key" type="s">
         <default>""</default>
         <summary>OpenAI API Key</summary>

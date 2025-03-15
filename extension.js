@@ -251,8 +251,9 @@ const Penguin = GObject.registerClass(
             const provider = this._settingsManager.getLLMProvider();
             const apiKey = this._settingsManager.getApiKey(provider);
             const model = this._settingsManager.getModel(provider);
+            const endpoint = this._settingsManager.getEndpoint(provider);
 
-            const llmProvider = LLMProviderFactory.createProvider(provider, apiKey, model);
+            const llmProvider = LLMProviderFactory.createProvider(provider, apiKey, model, endpoint);
 
             llmProvider.sendRequest(this._history, (error, response) => {
                 if (error) {
